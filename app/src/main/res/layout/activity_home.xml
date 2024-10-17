@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".HomeActivity">
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="410dp"
+        android:layout_height="161dp"
+        android:layout_marginStart="1dp"
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="match_parent"
+            android:layout_height="129dp"
+            android:text="Olá, IDH baixo" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/button_depositar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="48dp"
+        android:onClick="depositar"
+        android:text="Depositar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
+    <Button
+        android:id="@+id/button_retirar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:onClick="retirar"
+        android:text="Retirar"
+        app:layout_constraintStart_toStartOf="@+id/button_depositar"
+        app:layout_constraintTop_toBottomOf="@+id/button_depositar" />
+
+    <Button
+        android:id="@+id/button_extrato"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:onClick="extrato"
+        android:text="Extrato"
+        app:layout_constraintStart_toStartOf="@+id/button_retirar"
+        app:layout_constraintTop_toBottomOf="@+id/button_retirar" />
+
+    <Button
+        android:id="@+id/button_pix"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:onClick="pix"
+        android:text="PIX"
+        app:layout_constraintStart_toStartOf="@+id/button_extrato"
+        app:layout_constraintTop_toBottomOf="@+id/button_extrato" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
