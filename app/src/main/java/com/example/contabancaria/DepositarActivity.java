@@ -12,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.io.Serializable;
 
 public class DepositarActivity extends AppCompatActivity {
-    private Classe_conta conta;
+    private Conta conta;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,7 +20,7 @@ public class DepositarActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_depositar);
 
-        conta = (Classe_conta) getIntent().getSerializableExtra("conta");
+        conta = (Conta) getIntent().getSerializableExtra("conta");
     }
 
     public void Confirmar(View view) {
@@ -28,11 +28,11 @@ public class DepositarActivity extends AppCompatActivity {
         EditText valor = findViewById(R.id.editText_depositar);
 
         try {
-
             double valor_double = Double.parseDouble(valor.getText().toString());
-            Classe_extrato extrato = new Classe_extrato("Deposito", conta.getSaldo());
-            conta.setExtrato(extrato);
-            conta.setSaldo(valor_double);
+
+            for(int i=0;i<5;i++) {
+                conta.depositar(valor_double);
+            }
             Intent intent = new Intent(this,HomeActivity.class);
             intent.putExtra("conta", (Serializable) conta);
             startActivity(intent);

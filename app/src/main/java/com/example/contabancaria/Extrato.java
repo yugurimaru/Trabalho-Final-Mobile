@@ -2,19 +2,17 @@ package com.example.contabancaria;
 
 import java.io.Serializable;
 
-public class Classe_extrato implements Serializable {
+public class Extrato implements Serializable {
 
     private String tipoTransacao;
     private double valor;
     private double saldoAtual;
-    private String data;
 
-        public Classe_extrato(String tipoTransacao, double valor, double saldoAtual, String data) {
-            this.tipoTransacao = tipoTransacao;
-            this.valor = valor;
-            this.saldoAtual = saldoAtual;
-            this.data = data;
-        }
+    public Extrato(String tipoTransacao, double valor, double saldoAtual) {
+        this.tipoTransacao = tipoTransacao;
+        this.valor = valor;
+        this.saldoAtual = saldoAtual;
+    }
 
     public String getTipoTransacao() {
         return tipoTransacao;
@@ -38,13 +36,5 @@ public class Classe_extrato implements Serializable {
 
     public void setSaldoAtual(double saldoAtual) {
         this.saldoAtual = saldoAtual;
-    }
-
-    public String getData() {
-        return data;
-    }
-
-    public void setData(String data) {
-        this.data = data;
     }
 }

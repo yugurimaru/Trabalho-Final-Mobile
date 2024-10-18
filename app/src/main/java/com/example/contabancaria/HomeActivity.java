@@ -2,19 +2,15 @@ package com.example.contabancaria;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import java.io.Serializable;
 
 public class HomeActivity extends AppCompatActivity {
-    private Classe_conta conta;
+    private Conta conta;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,7 +18,7 @@ public class HomeActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_home);
         setTitle("Home");
-        conta = (Classe_conta) getIntent().getSerializableExtra("conta");
+        conta = (Conta) getIntent().getSerializableExtra("conta");
     }
 
 

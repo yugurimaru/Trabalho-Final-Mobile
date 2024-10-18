@@ -1,6 +1,6 @@
 package com.example.contabancaria;
 
-public class Classe_usuario {
+public class Usuario {
 
     private int id;
     private String nome;
@@ -30,7 +30,7 @@ public class Classe_usuario {
         this.senha = senha;
     }
 
-    public Classe_usuario(int id, String nome, String senha) {
+    public Usuario(int id, String nome, String senha) {
         this.id = id;
         this.nome = nome;
         this.senha = senha;

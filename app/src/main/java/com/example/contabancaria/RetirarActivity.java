@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.io.Serializable;
 
 public class RetirarActivity extends AppCompatActivity {
-    private Classe_conta conta;
+    private Conta conta;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,7 +20,7 @@ public class RetirarActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_retirar);
 
-        conta = (Classe_conta) getIntent().getSerializableExtra("conta");
+        conta = (Conta) getIntent().getSerializableExtra("conta");
     }
 
     public void Confirmar(View view) {
@@ -29,25 +28,20 @@ public class RetirarActivity extends AppCompatActivity {
         EditText valor = findViewById(R.id.editText_retirar);
 
         try {
-
             double valor_double = Double.parseDouble(valor.getText().toString());
-            if((conta.getSaldo() - valor_double) > 0.0){
-                Classe_extrato extrato = new Classe_extrato("Retirada", conta.getSaldo());
-                conta.setExtrato(extrato);
-                conta.setSaldo(conta.getSaldo() - valor_double);
-                Intent intent = new Intent(this,HomeActivity.class);
-                intent.putExtra("conta", (Serializable) conta);
-                startActivity(intent);
-            }
-            else{
-                Toast.makeText(this, "Saldo insuficiente na conta!",
-                        Toast.LENGTH_SHORT).show();
-                return;
-            }
+
+            conta.retirar(valor_double);
+
+            Intent intent = new Intent(this,HomeActivity.class);
+            intent.putExtra("conta", (Serializable) conta);
+            startActivity(intent);
+
 
         }catch (Exception e){
             Log.i("Retirar","Erro no parse");
         }
+
+
 
     }
 }

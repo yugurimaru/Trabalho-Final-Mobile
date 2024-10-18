@@ -2,7 +2,6 @@ package com.example.contabancaria;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -24,9 +23,7 @@ public class LoginActivity extends AppCompatActivity {
         setTitle("Login");
     }
 
-    Classe_pix chavePix = new Classe_pix(1);
-    Classe_extrato extrato = new Classe_extrato(1);
-    Classe_conta conta = new Classe_conta(1,0,chavePix, (List<Classe_extrato>) extrato);
+    Conta conta = new Conta(1,0);
 
 
 

@@ -2,7 +2,7 @@ package com.example.contabancaria;
 
 import java.io.Serializable;
 
-public class Classe_pix implements Serializable {
+public class Pix implements Serializable {
 
     private static final long serialVersionUID = 1L;
     private int id;
@@ -24,12 +24,12 @@ public class Classe_pix implements Serializable {
         this.pix = pix;
     }
 
-    public Classe_pix(int id, long pix) {
+    public Pix(int id, long pix) {
         this.id = id;
         this.pix = pix;
     }
 
-    public Classe_pix(int id) {
+    public Pix(int id) {
         this.id = id;
     }
 }
