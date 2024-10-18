@@ -21,32 +21,30 @@
         app:layout_constraintVertical_bias="0.212">
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/textView_usuario"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="TextView" />
+            android:text="Usuário:" />
 
         <EditText
             android:id="@+id/editText_usuario"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="text"
-            android:text="Name" />
+            android:inputType="text" />
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/textView_senha"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="TextView" />
+            android:text="Senha:" />
 
         <EditText
             android:id="@+id/editText_senha"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="text"
-            android:text="Name" />
+            android:inputType="text" />
 
         <Button
             android:id="@+id/button_entrar"

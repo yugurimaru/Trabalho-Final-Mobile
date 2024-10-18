@@ -7,4 +7,34 @@
     android:layout_height="match_parent"
     tools:context=".RetirarActivity">
 
+    <LinearLayout
+        android:layout_width="409dp"
+        android:layout_height="657dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="1dp"
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/textView_retirar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Digite o valor a retirar:" />
+
+        <EditText
+            android:id="@+id/editText_retirar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="text"
+            android:text="0.00" />
+
+        <Button
+            android:id="@+id/button_confirmar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="Confirmar"
+            android:text="Confirmar" />
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

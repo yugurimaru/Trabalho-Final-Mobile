@@ -2,6 +2,7 @@ package com.example.contabancaria;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -9,6 +10,7 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 
@@ -21,6 +23,10 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         setTitle("Login");
     }
+
+    Classe_pix chavePix = new Classe_pix(1);
+    Classe_extrato extrato = new Classe_extrato(1);
+    Classe_conta conta = new Classe_conta(1,0,chavePix, (List<Classe_extrato>) extrato);
 
 
 
@@ -43,7 +49,10 @@ public class LoginActivity extends AppCompatActivity {
 
         if(listaUsuario.contains(usuario_str) && senha_str.equals("123")){
 
+            
+
             Intent intent = new Intent(this,HomeActivity.class);
+            intent.putExtra("conta", (Serializable) conta);
             startActivity(intent);
 
 
