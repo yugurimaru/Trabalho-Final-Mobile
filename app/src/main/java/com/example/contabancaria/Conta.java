@@ -9,7 +9,7 @@ public class Conta implements Serializable {
     private static final long serialVersionUID = 1L;
     private int id;
     private double saldo;
-    private Pix chavePix;
+    private List<Pix> pix;
     private List<Extrato> extrato;
 
     public Conta(int id, double saldoInicial) {
@@ -18,7 +18,7 @@ public class Conta implements Serializable {
             throw new IllegalArgumentException("O saldo inicial não pode ser negativo");
         }
         this.saldo = saldoInicial;
-        this.chavePix = null; // Inicia sem chave PIX
+        this.pix = new ArrayList<>();
         this.extrato = new ArrayList<>();
     }
 
@@ -30,12 +30,12 @@ public class Conta implements Serializable {
         return saldo;
     }
 
-    public Pix getChavePix() {
-        return chavePix;
+    public List<Pix> getPix() {
+        return pix;
     }
 
-    public void setChavePix(Pix chavePix) {
-        this.chavePix = chavePix;
+    public void setPix(List<Pix> pix) {
+        this.pix = pix;
     }
 
     public List<Extrato> getExtrato() {
@@ -65,4 +65,13 @@ public class Conta implements Serializable {
         Extrato novaTransacao = new Extrato(tipoTransacao, valor, saldo);
         extrato.add(novaTransacao);
     }
+
+    public void adicionarChavePix(Pix pix){
+        if (pix == null){
+            throw new IllegalArgumentException("A chave Pix não pode ser nula");
+        }
+        this.pix.add(pix);
+    }
+
+
 }

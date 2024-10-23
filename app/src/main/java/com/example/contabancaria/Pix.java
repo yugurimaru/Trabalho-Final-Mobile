@@ -4,32 +4,29 @@ import java.io.Serializable;
 
 public class Pix implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    private int id;
-    private long pix;
+    private String chave;
+    private String TipoChave;
 
-    public int getId() {
-        return id;
+    public Pix(String chave, String tipoChave) {
+        this.chave = chave;
+        TipoChave = tipoChave;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public String getChave() {
+        return chave;
     }
 
-    public long getPix() {
-        return pix;
+    public void setChave(String chave) {
+        this.chave = chave;
     }
 
-    public void setPix(long pix) {
-        this.pix = pix;
+    public String getTipoChave() {
+        return TipoChave;
     }
 
-    public Pix(int id, long pix) {
-        this.id = id;
-        this.pix = pix;
-    }
-
-    public Pix(int id) {
-        this.id = id;
+    public void setTipoChave(String tipoChave) {
+        if(tipoChave != null) {
+            this.TipoChave = tipoChave;
+        }
     }
 }

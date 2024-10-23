@@ -19,7 +19,9 @@ public class Extrato implements Serializable {
     }
 
     public void setTipoTransacao(String tipoTransacao) {
-        this.tipoTransacao = tipoTransacao;
+        if (tipoTransacao != null) {
+            this.tipoTransacao = tipoTransacao;
+        }
     }
 
     public double getValor() {

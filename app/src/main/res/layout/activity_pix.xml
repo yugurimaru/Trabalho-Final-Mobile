@@ -7,4 +7,35 @@
     android:layout_height="match_parent"
     tools:context=".PixActivity">
 
+    <Button
+        android:id="@+id/button_CadastrarPix"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:onClick="CadastrarPix"
+        android:text="Cadastrar Chaves Pix"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/listViewPix" />
+
+    <ListView
+        android:id="@+id/listViewPix"
+        android:layout_width="411dp"
+        android:layout_height="261dp"
+        android:layout_marginStart="1dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/button_TransferirPix"
+        android:layout_width="158dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="36dp"
+        android:onClick="TransferirViaPix"
+        android:text="Transferir Via Pix"
+        app:layout_constraintBottom_toBottomOf="@+id/button_CadastrarPix"
+        app:layout_constraintStart_toEndOf="@+id/button_CadastrarPix"
+        app:layout_constraintTop_toTopOf="@+id/button_CadastrarPix"
+        app:layout_constraintVertical_bias="0.0" />
 </androidx.constraintlayout.widget.ConstraintLayout>
