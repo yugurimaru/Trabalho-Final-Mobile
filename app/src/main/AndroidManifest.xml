@@ -13,7 +13,13 @@
         android:theme="@style/Theme.ContaBancaria"
         tools:targetApi="31">
         <activity
-            android:name=".PixActivity"
+            android:name=".CadastrarPixActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ListarPixActivity"
+            android:exported="false" />
+        <activity
+            android:name=".HomePixActivity"
             android:exported="false" />
         <activity
             android:name=".ExtratoActivity"

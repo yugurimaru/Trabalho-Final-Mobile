@@ -9,7 +9,7 @@ public class Pix implements Serializable {
 
     public Pix(String chave, String tipoChave) {
         this.chave = chave;
-        TipoChave = tipoChave;
+        setTipoChave(tipoChave);
     }
 
     public String getChave() {
@@ -25,8 +25,18 @@ public class Pix implements Serializable {
     }
 
     public void setTipoChave(String tipoChave) {
-        if(tipoChave != null) {
-            this.TipoChave = tipoChave;
+        if (tipoChave == null ) {
+            throw new IllegalArgumentException("O tipo de chave está nulo");
         }
+        else if(!tipoChave.equalsIgnoreCase("cpf") && !tipoChave.equalsIgnoreCase("telefone")){
+            throw new IllegalArgumentException("O tipo de chave deve ser CPF ou TELEFONE");
+        }
+        if(tipoChave.equalsIgnoreCase("cpf")){
+            tipoChave = "CPF";
+        }
+        if(tipoChave.equalsIgnoreCase("telefone")){
+            tipoChave = "TELEFONE";
+        }
+        this.TipoChave = tipoChave;
     }
 }

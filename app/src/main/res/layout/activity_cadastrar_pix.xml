@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CadastrarPixActivity">
+
+    <LinearLayout
+        android:layout_width="410dp"
+        android:layout_height="705dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="1dp"
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/textView_TipoChavePix"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Digite o tipo da Chave Pix (CPF ou Telefone):" />
+
+        <EditText
+            android:id="@+id/editText_TipoChavePix"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="text" />
+
+        <TextView
+            android:id="@+id/textView_ChavePix"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Digite a Chave Pix:" />
+
+        <EditText
+            android:id="@+id/editText_ChavePix"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="text" />
+
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="Confirmar"
+            android:text="Confirmar" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

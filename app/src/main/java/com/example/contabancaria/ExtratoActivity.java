@@ -39,16 +39,16 @@ public class ExtratoActivity extends AppCompatActivity {
         }
     }
 
-    public void Atualizar(View view) {
-        // Log de atualização de extrato
-        if (conta.getExtrato().isEmpty()) {
-            Log.i("Extrato", "Nenhuma transacao encontrada.");
-        } else {
-            for (Extrato transacao : conta.getExtrato()) {
-                Log.i("Extrato", "Tipo transacao: " + transacao.getTipoTransacao());
-                Log.i("Extrato", "Valor: " + transacao.getValor());
-                Log.i("Extrato", "Saldo apos transacao: " + transacao.getSaldoAtual());
-            }
-        }
-    }
+//    public void Atualizar(View view) {
+//        // Log de atualização de extrato
+//        if (conta.getExtrato().isEmpty()) {
+//            Log.i("Extrato", "Nenhuma transacao encontrada.");
+//        } else {
+//            for (Extrato transacao : conta.getExtrato()) {
+//                Log.i("Extrato", "Tipo transacao: " + transacao.getTipoTransacao());
+//                Log.i("Extrato", "Valor: " + transacao.getValor());
+//                Log.i("Extrato", "Saldo apos transacao: " + transacao.getSaldoAtual());
+//            }
+//        }
+//    }
 }

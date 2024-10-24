@@ -10,11 +10,9 @@ import android.widget.TextView;
 import java.util.List;
 
 public class PixAdapter extends ArrayAdapter<Pix> {
-    private List<Pix> pixList; // Adicione essa linha para armazenar a lista
 
     public PixAdapter(Context context, List<Pix> pixList) {
         super(context, 0, pixList);
-        this.pixList = pixList; // Inicializa a lista
     }
 
     @Override
@@ -31,15 +29,11 @@ public class PixAdapter extends ArrayAdapter<Pix> {
         TextView tvChave = convertView.findViewById(R.id.tvChave);
 
         // Popule os dados nas views
-        tvTipoChave.setText(pix.getTipoChave());
+        tvTipoChave.setText(String.format("Tipo: " + pix.getTipoChave()));
         tvChave.setText(pix.getChave());
 
         // Retorne a view preenchida para ser exibida no ListView
         return convertView;
     }
 
-    // Método para adicionar uma nova chave Pix
-    public void add(Pix pix) {
-        pixList.add(pix); // Adiciona a nova chave à lista
-    }
 }
