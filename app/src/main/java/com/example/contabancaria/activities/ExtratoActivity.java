@@ -1,14 +1,14 @@
-package com.example.contabancaria;
+package com.example.contabancaria.activities;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.contabancaria.Extrato;
-import com.example.contabancaria.ExtratoAdapter;
+import com.example.contabancaria.R;
+import com.example.contabancaria.classes.Conta;
+import com.example.contabancaria.classes.Extrato;
 
 import java.util.List;
 

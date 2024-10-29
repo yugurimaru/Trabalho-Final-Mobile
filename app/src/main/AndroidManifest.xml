@@ -13,28 +13,28 @@
         android:theme="@style/Theme.ContaBancaria"
         tools:targetApi="31">
         <activity
-            android:name=".CadastrarPixActivity"
+            android:name=".activities.CadastrarPixActivity"
             android:exported="false" />
         <activity
-            android:name=".ListarPixActivity"
+            android:name=".activities.ListarPixActivity"
             android:exported="false" />
         <activity
-            android:name=".HomePixActivity"
+            android:name=".activities.HomePixActivity"
             android:exported="false" />
         <activity
-            android:name=".ExtratoActivity"
+            android:name=".activities.ExtratoActivity"
             android:exported="false" />
         <activity
-            android:name=".RetirarActivity"
+            android:name=".activities.RetirarActivity"
             android:exported="false" />
         <activity
-            android:name=".DepositarActivity"
+            android:name=".activities.DepositarActivity"
             android:exported="true" />
         <activity
-            android:name=".HomeActivity"
+            android:name=".activities.HomeActivity"
             android:exported="false" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".activities.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

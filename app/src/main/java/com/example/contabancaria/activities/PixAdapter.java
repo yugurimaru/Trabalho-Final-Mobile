@@ -1,4 +1,4 @@
-package com.example.contabancaria;
+package com.example.contabancaria.activities;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -6,6 +6,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+
+import com.example.contabancaria.R;
+import com.example.contabancaria.classes.Pix;
 
 import java.util.List;
 

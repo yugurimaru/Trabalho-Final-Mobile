@@ -1,4 +1,4 @@
-package com.example.contabancaria;
+package com.example.contabancaria.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,6 +7,10 @@ import android.widget.EditText;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.contabancaria.R;
+import com.example.contabancaria.classes.Conta;
+import com.example.contabancaria.classes.Pix;
 
 import java.io.Serializable;
 

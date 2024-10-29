@@ -1,4 +1,4 @@
-package com.example.contabancaria;
+package com.example.contabancaria.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,44 +7,45 @@ import android.view.View;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.contabancaria.R;
+import com.example.contabancaria.classes.Conta;
+
 import java.io.Serializable;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomePixActivity extends AppCompatActivity {
     private Conta conta;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_home);
-        setTitle("Home");
+        setContentView(R.layout.activity_pix);
         conta = (Conta) getIntent().getSerializableExtra("conta");
+
     }
 
-
-    public void depositar(View view) {
-        Intent intent = new Intent(this,DepositarActivity.class);
+    public void CadastrarPix(View view) {
+        Intent intent = new Intent(this, CadastrarPixActivity.class);
         intent.putExtra("conta", (Serializable) conta);
         startActivity(intent);
 
     }
 
-    public void retirar(View view) {
-        Intent intent = new Intent(this,RetirarActivity.class);
+    public void TransferirViaPix(View view) {
+        Intent intent = new Intent(this,ListarPixActivity.class);
+        intent.putExtra("conta", (Serializable) conta);
+        startActivity(intent);
+    }
+
+    public void ListarPix(View view) {
+        Intent intent = new Intent(this,ListarPixActivity.class);
         intent.putExtra("conta", (Serializable) conta);
         startActivity(intent);
 
     }
 
-    public void extrato(View view) {
-        Intent intent = new Intent(this,ExtratoActivity.class);
-        intent.putExtra("conta", (Serializable) conta);
-        startActivity(intent);
-
-    }
-
-    public void pix(View view) {
-        Intent intent = new Intent(this, HomePixActivity.class);
+    public void Voltar(View view) {
+        Intent intent = new Intent(this,HomeActivity.class);
         intent.putExtra("conta", (Serializable) conta);
         startActivity(intent);
     }

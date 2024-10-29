@@ -1,4 +1,4 @@
-package com.example.contabancaria;
+package com.example.contabancaria.classes;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -8,18 +8,38 @@ public class Conta implements Serializable {
 
     private static final long serialVersionUID = 1L;
     private int id;
+    private String usuario;
+    private String senha;
     private double saldo;
     private List<Pix> pix;
     private List<Extrato> extrato;
 
-    public Conta(int id, double saldoInicial) {
+    public Conta(int id, double saldoInicial, String usuario, String senha) {
         this.id = id;
+        this.usuario = usuario;
+        this.senha = senha;
         if (saldoInicial < 0) {
             throw new IllegalArgumentException("O saldo inicial não pode ser negativo");
         }
         this.saldo = saldoInicial;
         this.pix = new ArrayList<>();
         this.extrato = new ArrayList<>();
+    }
+
+    public String getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+    }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
     }
 
     public int getId() {
