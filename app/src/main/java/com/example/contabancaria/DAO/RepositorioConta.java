@@ -84,6 +84,22 @@ public class RepositorioConta extends SQLiteOpenHelper {
         return (int) db.compileStatement("SELECT last_insert_rowid()").simpleQueryForLong();
     }
 
+    public int obterProximoId() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT MAX(id) FROM conta";  // Supondo que a tabela seja "contas"
+        Cursor cursor = db.rawQuery(query, null);
+
+        int proximoId = 1; // Valor inicial
+
+        if (cursor.moveToFirst()) {
+            int maiorId = cursor.getInt(0);
+            proximoId = maiorId + 1;
+        }
+
+        cursor.close();
+        return proximoId;
+    }
+
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS conta");

@@ -5,10 +5,10 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.LoginActivity">
+    tools:context=".activities.CadastroActivity">
 
     <LinearLayout
-        android:id="@+id/linearLayout2"
+        android:id="@+id/linearLayout3"
         android:layout_width="410dp"
         android:layout_height="205dp"
         android:layout_marginTop="216dp"
@@ -16,54 +16,51 @@
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.212">
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/textView_usuario"
+            android:id="@+id/textView_usuarioCadastro"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Usuário:" />
+            android:text="Nome de usuário:" />
 
         <EditText
-            android:id="@+id/editText_usuario"
+            android:id="@+id/editText_usuarioCadastro"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="text" />
 
         <TextView
-            android:id="@+id/textView_senha"
+            android:id="@+id/textView_senhaCadastro"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Senha:" />
 
         <EditText
-            android:id="@+id/editText_senha"
+            android:id="@+id/editText_senhaCadastro"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="text" />
 
         <Button
-            android:id="@+id/button_entrar"
+            android:id="@+id/button3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="Entrar"
-            android:text="Entrar" />
+            android:onClick="Cadastrar"
+            android:text="Cadastrar" />
     </LinearLayout>
 
     <Button
-        android:id="@+id/button_criarConta"
+        android:id="@+id/button_entrar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="140dp"
-        android:layout_marginTop="76dp"
-        android:onClick="CriarConta"
-        android:text="Cadastrar-se"
+        android:layout_marginStart="162dp"
+        android:layout_marginTop="52dp"
+        android:onClick="Entrar"
+        android:text="Entrar"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
-
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
 </androidx.constraintlayout.widget.ConstraintLayout>

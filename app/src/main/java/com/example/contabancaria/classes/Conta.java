@@ -14,6 +14,7 @@ public class Conta implements Serializable {
     private List<Pix> pix;
     private List<Extrato> extrato;
 
+
     public Conta(int id, double saldoInicial, String usuario, String senha) {
         this.id = id;
         this.usuario = usuario;
@@ -24,6 +25,10 @@ public class Conta implements Serializable {
         this.saldo = saldoInicial;
         this.pix = new ArrayList<>();
         this.extrato = new ArrayList<>();
+    }
+
+    public void setSaldo(double saldo) {
+        this.saldo = saldo;
     }
 
     public String getUsuario() {
