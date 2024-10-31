@@ -1,12 +1,14 @@
 package com.example.contabancaria.activities;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.contabancaria.DAO.RepositorioPix;
 import com.example.contabancaria.R;
 import com.example.contabancaria.classes.Conta;
 
@@ -14,6 +16,7 @@ import java.io.Serializable;
 
 public class HomePixActivity extends AppCompatActivity {
     private Conta conta;
+    private RepositorioPix repositorioPix;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +35,7 @@ public class HomePixActivity extends AppCompatActivity {
     }
 
     public void TransferirViaPix(View view) {
-        Intent intent = new Intent(this,ListarPixActivity.class);
+        Intent intent = new Intent(this,TransferirViaPixActivity.class);
         intent.putExtra("conta", (Serializable) conta);
         startActivity(intent);
     }
@@ -48,5 +51,6 @@ public class HomePixActivity extends AppCompatActivity {
         Intent intent = new Intent(this,HomeActivity.class);
         intent.putExtra("conta", (Serializable) conta);
         startActivity(intent);
+        finish();
     }
 }

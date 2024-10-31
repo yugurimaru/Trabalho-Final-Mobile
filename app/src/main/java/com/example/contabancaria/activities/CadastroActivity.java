@@ -27,6 +27,7 @@ public class CadastroActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_cadastro);
+        setTitle("Cadastro");
 
         repositorioConta = new RepositorioConta(this);
 

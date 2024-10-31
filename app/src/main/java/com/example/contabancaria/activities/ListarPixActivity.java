@@ -12,6 +12,7 @@ import android.widget.ListView;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.contabancaria.DAO.RepositorioPix;
 import com.example.contabancaria.R;
 import com.example.contabancaria.classes.Conta;
 import com.example.contabancaria.classes.Pix;
@@ -20,12 +21,15 @@ import java.util.List;
 
 public class ListarPixActivity extends AppCompatActivity {
     private Conta conta;
+    private RepositorioPix repositorioPix;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_listar_pix);
+
+        repositorioPix = new RepositorioPix(this);
 
         // Obtém a conta passada pela Intent
         conta = (Conta) getIntent().getSerializableExtra("conta");
@@ -34,38 +38,39 @@ public class ListarPixActivity extends AppCompatActivity {
         ListView listView = findViewById(R.id.listViewPix);
 
         // Obter a lista de chaves Pix da conta
-        List<Pix> pixList = conta.getPix();
+        List<Pix> pixList = repositorioPix.listarChavesPix(conta.getId());
 
-        // Verifique se a lista está vazia e configure o adapter
         if (pixList.isEmpty()) {
             Log.i("PIX", "Nenhuma Chave Pix encontrada.");
         } else {
             PixAdapter adapter = new PixAdapter(this, pixList);
             listView.setAdapter(adapter);
 
-            // Configurando o long click para deletar o item
             listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
                 @Override
                 public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
 
-                    // Exibe um diálogo para confirmar a exclusão
                     new AlertDialog.Builder(ListarPixActivity.this)
                             .setTitle("Excluir Chave Pix")
                             .setMessage("Deseja excluir esta Chave Pix?")
                             .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
 
-                                    // Remove o item da lista de chaves Pix
-                                    conta.getPix().remove(position);
+
+                                    Pix chavePix = pixList.get(position);
+
+                                    repositorioPix.excluirChavePix(chavePix.getChave());
+
+                                    pixList.remove(position);
 
                                     // Notifica o adapter que os dados mudaram
                                     adapter.notifyDataSetChanged();
 
-                                    // Após a exclusão, navega de volta para a HomePixActivity
+
                                     Intent intent = new Intent(ListarPixActivity.this, HomePixActivity.class);
-                                    intent.putExtra("conta", conta); // Passa a conta atualizada
+                                    intent.putExtra("conta", conta);
                                     startActivity(intent);
-                                    finish(); // Finaliza a atividade atual
+                                    finish();
                                 }
                             })
                             .setNegativeButton("Não", null)

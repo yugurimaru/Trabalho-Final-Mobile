@@ -3,6 +3,7 @@ package com.example.contabancaria.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,6 +23,11 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         setTitle("Home");
         conta = (Conta) getIntent().getSerializableExtra("conta");
+
+        TextView boasvindas = findViewById(R.id.textView_home);
+
+        boasvindas.setText("Seja bem vindo " + conta.getUsuario());
+
     }
 
 
@@ -50,5 +56,11 @@ public class HomeActivity extends AppCompatActivity {
         Intent intent = new Intent(this, HomePixActivity.class);
         intent.putExtra("conta", (Serializable) conta);
         startActivity(intent);
+    }
+
+    public void sair(View view) {
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

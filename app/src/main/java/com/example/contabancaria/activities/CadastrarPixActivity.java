@@ -8,6 +8,7 @@ import android.widget.EditText;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.contabancaria.DAO.RepositorioPix;
 import com.example.contabancaria.R;
 import com.example.contabancaria.classes.Conta;
 import com.example.contabancaria.classes.Pix;
@@ -16,6 +17,8 @@ import java.io.Serializable;
 
 public class CadastrarPixActivity extends AppCompatActivity {
     private Conta conta;
+    private RepositorioPix repositorioPix;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,19 +29,22 @@ public class CadastrarPixActivity extends AppCompatActivity {
 
     public void Confirmar(View view) {
 
+        repositorioPix = new RepositorioPix(this);
+
         EditText TipoChavePix = findViewById(R.id.editText_TipoChavePix);
         EditText ChavePix = findViewById(R.id.editText_ChavePix);
 
         String TipoChavePix_str = TipoChavePix.getText().toString().trim();
         String ChavePix_str = ChavePix.getText().toString();
 
-        Pix pix = new Pix(ChavePix_str, TipoChavePix_str);
+        Pix pix = new Pix(conta.getId(),ChavePix_str, TipoChavePix_str);
 
-        conta.adicionarChavePix(pix);
+        conta.adicionarChavePix(repositorioPix, pix);
 
         Intent intent = new Intent(this, HomePixActivity.class);
         intent.putExtra("conta", (Serializable) conta);
         startActivity(intent);
+        finish();
 
     }
 }

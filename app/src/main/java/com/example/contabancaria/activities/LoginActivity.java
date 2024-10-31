@@ -1,6 +1,7 @@
 package com.example.contabancaria.activities;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -10,6 +11,7 @@ import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.contabancaria.DAO.RepositorioConta;
+import com.example.contabancaria.DAO.RepositorioPix;
 import com.example.contabancaria.R;
 import com.example.contabancaria.classes.Conta;
 

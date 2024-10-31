@@ -11,7 +11,7 @@ import androidx.annotation.Nullable;
 import com.example.contabancaria.classes.Conta;
 
 public class RepositorioConta extends SQLiteOpenHelper {
-
+    private SQLiteDatabase db;
     private RepositorioPix repositorioPix;
     private RepositorioExtrato repositorioExtrato;
 
@@ -53,13 +53,21 @@ public class RepositorioConta extends SQLiteOpenHelper {
 
         // Obter o ID da conta recém-criada
         int contaId = getLastInsertedId(db);
-
-        // Delegar inserção de Pix e Extrato aos respectivos repositórios
-        repositorioPix.adicionarChavesPix(db, contaId, conta.getPix());
-        repositorioExtrato.adicionarExtrato(db, contaId, conta.getExtrato());
-
-        Log.i("RepositorioConta", "Conta, Pix e Extrato inseridos.");
     }
+
+    public void atualizarSaldo(int id, double saldo) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        try {
+            String sqlUpdateConta = "UPDATE conta SET saldo = ? WHERE id = ?";
+            db.execSQL(sqlUpdateConta, new Object[]{saldo, id});
+            Log.i("RepositorioConta", "Saldo atualizado para o ID: " + id);
+        } catch (Exception e) {
+            Log.e("RepositorioConta", "Erro ao atualizar saldo: ", e);
+        } finally {
+            db.close();
+        }
+    }
+
 
     public Conta buscarContaPorUsuarioSenha(String usuario, String senha) {
         SQLiteDatabase db = this.getReadableDatabase();
@@ -78,6 +86,34 @@ public class RepositorioConta extends SQLiteOpenHelper {
         // Usuário não encontrado
         cursor.close();
         return null;
+    }
+
+    public Conta buscarContaPorId(int id) {
+        db = this.getReadableDatabase();
+        Conta conta = null;
+
+        // Consulta para buscar a conta pelo ID
+        Cursor cursor = db.query("conta", new String[]{"id", "saldo", "usuario", "senha"},
+                "id=?", new String[]{String.valueOf(id)},
+                null, null, null);
+
+        // Verifica se há resultados
+        if (cursor != null && cursor.moveToFirst()) {
+            // Cria uma nova Conta a partir dos dados do cursor
+            int contaId = cursor.getInt(cursor.getColumnIndex("id"));
+            double saldo = cursor.getDouble(cursor.getColumnIndex("saldo"));
+            String usuario = cursor.getString(cursor.getColumnIndex("usuario"));
+            String senha = cursor.getString(cursor.getColumnIndex("senha"));
+
+            conta = new Conta(contaId, saldo, usuario, senha);
+        }
+
+        // Fecha o cursor e retorna a conta
+        if (cursor != null) {
+            cursor.close();
+        }
+
+        return conta;
     }
 
     private int getLastInsertedId(SQLiteDatabase db) {

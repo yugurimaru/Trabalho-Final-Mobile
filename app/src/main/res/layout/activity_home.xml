@@ -22,7 +22,7 @@
             android:layout_height="wrap_content" />
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/textView_home"
             android:layout_width="match_parent"
             android:layout_height="129dp"
             android:text="Olá, IDH baixo" />
@@ -68,5 +68,15 @@
         android:text="PIX"
         app:layout_constraintStart_toStartOf="@+id/button_extrato"
         app:layout_constraintTop_toBottomOf="@+id/button_extrato" />
+
+    <Button
+        android:id="@+id/button_encerrarSessao"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="23dp"
+        android:onClick="sair"
+        android:text="Encerrar Sessão"
+        app:layout_constraintStart_toStartOf="@+id/button_pix"
+        app:layout_constraintTop_toBottomOf="@+id/button_pix" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
