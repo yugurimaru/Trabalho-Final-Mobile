@@ -14,13 +14,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.contabancaria.DAO.RepositorioPix;
 import com.example.contabancaria.R;
-import com.example.contabancaria.classes.Conta;
 import com.example.contabancaria.classes.Pix;
 
 import java.util.List;
 
 public class ListarPixActivity extends AppCompatActivity {
-    private Conta conta;
+    private int contaId;
     private RepositorioPix repositorioPix;
 
     @Override
@@ -28,17 +27,20 @@ public class ListarPixActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_listar_pix);
+        setTitle("Listagem Pix");
+
+        contaId = getIntent().getIntExtra("CONTA_ID", -1);
+
+        if (contaId == -1) {
+            Log.e("ListarPixActivity", "ID da conta inválido");
+            finish();
+            return;
+        }
 
         repositorioPix = new RepositorioPix(this);
 
-        // Obtém a conta passada pela Intent
-        conta = (Conta) getIntent().getSerializableExtra("conta");
-
-        // Referência ao ListView
         ListView listView = findViewById(R.id.listViewPix);
-
-        // Obter a lista de chaves Pix da conta
-        List<Pix> pixList = repositorioPix.listarChavesPix(conta.getId());
+        List<Pix> pixList = repositorioPix.listarChavesPix(contaId);
 
         if (pixList.isEmpty()) {
             Log.i("PIX", "Nenhuma Chave Pix encontrada.");
@@ -56,19 +58,13 @@ public class ListarPixActivity extends AppCompatActivity {
                             .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
 
-
                                     Pix chavePix = pixList.get(position);
-
                                     repositorioPix.excluirChavePix(chavePix.getChave());
-
                                     pixList.remove(position);
-
-                                    // Notifica o adapter que os dados mudaram
                                     adapter.notifyDataSetChanged();
 
-
                                     Intent intent = new Intent(ListarPixActivity.this, HomePixActivity.class);
-                                    intent.putExtra("conta", conta);
+                                    intent.putExtra("CONTA_ID", contaId);
                                     startActivity(intent);
                                     finish();
                                 }
@@ -77,7 +73,7 @@ public class ListarPixActivity extends AppCompatActivity {
                             .setIcon(android.R.drawable.ic_dialog_alert)
                             .show();
 
-                    return true; // Retorna true para indicar que o evento foi consumido
+                    return true;
                 }
             });
         }

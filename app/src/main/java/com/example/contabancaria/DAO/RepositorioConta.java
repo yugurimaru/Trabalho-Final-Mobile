@@ -11,20 +11,17 @@ import androidx.annotation.Nullable;
 import com.example.contabancaria.classes.Conta;
 
 public class RepositorioConta extends SQLiteOpenHelper {
-    private SQLiteDatabase db;
     private RepositorioPix repositorioPix;
     private RepositorioExtrato repositorioExtrato;
 
     public RepositorioConta(@Nullable Context context) {
         super(context, "banco_contas", null, 1);
-        // Instanciando repositórios auxiliares
         repositorioPix = new RepositorioPix(context);
         repositorioExtrato = new RepositorioExtrato(context);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        // Criando a tabela Conta
         String createContaTable = "CREATE TABLE conta (" +
                 "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "usuario TEXT NOT NULL, " +
@@ -37,22 +34,23 @@ public class RepositorioConta extends SQLiteOpenHelper {
         db.execSQL(sqlInsertAdmin);
         Log.i("RepositorioConta", "Conta admin criada.");
 
-        // Criando as tabelas Pix e Extrato no repositório correspondente
         repositorioPix.onCreate(db);
         repositorioExtrato.onCreate(db);
     }
 
     public void adicionarConta(Conta conta) {
         SQLiteDatabase db = this.getWritableDatabase();
+        try {
+            String sqlInsertConta = "INSERT INTO conta (usuario, senha, saldo) VALUES ('" +
+                    conta.getUsuario() + "', '" + conta.getSenha() + "', " + conta.getSaldo() + ")";
+            db.execSQL(sqlInsertConta);
+            Log.i("RepositorioConta", "Conta inserida.");
 
-        // Inserir a Conta
-        String sqlInsertConta = "INSERT INTO conta (usuario, senha, saldo) VALUES ('" +
-                conta.getUsuario() + "', '" + conta.getSenha() + "', " + conta.getSaldo() + ")";
-        db.execSQL(sqlInsertConta);
-        Log.i("RepositorioConta", "Conta inserida.");
-
-        // Obter o ID da conta recém-criada
-        int contaId = getLastInsertedId(db);
+            int contaId = getLastInsertedId(db);
+            Log.i("RepositorioConta", "Último ID inserido: " + contaId);
+        } finally {
+            db.close();
+        }
     }
 
     public void atualizarSaldo(int id, double saldo) {
@@ -68,72 +66,52 @@ public class RepositorioConta extends SQLiteOpenHelper {
         }
     }
 
-
     public Conta buscarContaPorUsuarioSenha(String usuario, String senha) {
         SQLiteDatabase db = this.getReadableDatabase();
-        String query = "SELECT * FROM conta WHERE usuario = ? AND senha = ?";
-        Cursor cursor = db.rawQuery(query, new String[]{usuario, senha});
+        Conta conta = null;
+        Cursor cursor = null;
+        try {
+            String query = "SELECT * FROM conta WHERE usuario = ? AND senha = ?";
+            cursor = db.rawQuery(query, new String[]{usuario, senha});
 
-        if (cursor.moveToFirst()) {
-            // Usuário encontrado
-            int id = cursor.getInt(cursor.getColumnIndexOrThrow("id"));
-            double saldo = cursor.getDouble(cursor.getColumnIndexOrThrow("saldo"));
-            Conta conta = new Conta(id, saldo, usuario, senha);
-            cursor.close();
-            return conta;
+            if (cursor.moveToFirst()) {
+                int id = cursor.getInt(cursor.getColumnIndexOrThrow("id"));
+                double saldo = cursor.getDouble(cursor.getColumnIndexOrThrow("saldo"));
+                conta = new Conta(id, usuario, senha, saldo, repositorioExtrato, this, repositorioPix);
+            }
+        } finally {
+            if (cursor != null) cursor.close();
+            db.close();
         }
-
-        // Usuário não encontrado
-        cursor.close();
-        return null;
+        return conta;
     }
 
     public Conta buscarContaPorId(int id) {
-        db = this.getReadableDatabase();
+        SQLiteDatabase db = this.getReadableDatabase();
         Conta conta = null;
+        Cursor cursor = null;
+        try {
+            cursor = db.query("conta", new String[]{"id", "saldo", "usuario", "senha"},
+                    "id=?", new String[]{String.valueOf(id)},
+                    null, null, null);
 
-        // Consulta para buscar a conta pelo ID
-        Cursor cursor = db.query("conta", new String[]{"id", "saldo", "usuario", "senha"},
-                "id=?", new String[]{String.valueOf(id)},
-                null, null, null);
+            if (cursor != null && cursor.moveToFirst()) {
+                int contaId = cursor.getInt(cursor.getColumnIndex("id"));
+                double saldo = cursor.getDouble(cursor.getColumnIndex("saldo"));
+                String usuario = cursor.getString(cursor.getColumnIndex("usuario"));
+                String senha = cursor.getString(cursor.getColumnIndex("senha"));
 
-        // Verifica se há resultados
-        if (cursor != null && cursor.moveToFirst()) {
-            // Cria uma nova Conta a partir dos dados do cursor
-            int contaId = cursor.getInt(cursor.getColumnIndex("id"));
-            double saldo = cursor.getDouble(cursor.getColumnIndex("saldo"));
-            String usuario = cursor.getString(cursor.getColumnIndex("usuario"));
-            String senha = cursor.getString(cursor.getColumnIndex("senha"));
-
-            conta = new Conta(contaId, saldo, usuario, senha);
+                conta = new Conta(contaId, usuario, senha, saldo, repositorioExtrato, this, repositorioPix);
+            }
+        } finally {
+            if (cursor != null) cursor.close();
+            db.close();
         }
-
-        // Fecha o cursor e retorna a conta
-        if (cursor != null) {
-            cursor.close();
-        }
-
         return conta;
     }
 
     private int getLastInsertedId(SQLiteDatabase db) {
         return (int) db.compileStatement("SELECT last_insert_rowid()").simpleQueryForLong();
-    }
-
-    public int obterProximoId() {
-        SQLiteDatabase db = this.getReadableDatabase();
-        String query = "SELECT MAX(id) FROM conta";  // Supondo que a tabela seja "contas"
-        Cursor cursor = db.rawQuery(query, null);
-
-        int proximoId = 1; // Valor inicial
-
-        if (cursor.moveToFirst()) {
-            int maiorId = cursor.getInt(0);
-            proximoId = maiorId + 1;
-        }
-
-        cursor.close();
-        return proximoId;
     }
 
     @Override

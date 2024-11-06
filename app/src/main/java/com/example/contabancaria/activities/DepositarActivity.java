@@ -10,47 +10,51 @@ import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.contabancaria.DAO.RepositorioConta;
-import com.example.contabancaria.DAO.RepositorioExtrato;
 import com.example.contabancaria.R;
 import com.example.contabancaria.classes.Conta;
-import com.example.contabancaria.classes.Extrato;
-
-import java.io.Serializable;
-
-import com.example.contabancaria.DAO.RepositorioExtrato;
 
 public class DepositarActivity extends AppCompatActivity {
     private Conta conta;
-    private RepositorioExtrato repositorioExtrato;
-    private RepositorioConta repositorioConta;
+    private int contaId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_depositar);
+        setTitle("Depositar");
 
-        conta = (Conta) getIntent().getSerializableExtra("conta");
-        repositorioExtrato = new RepositorioExtrato(this);
-        repositorioConta = new RepositorioConta(this);
+        contaId = getIntent().getIntExtra("CONTA_ID", -1);
+
+        if (contaId != -1) {
+            RepositorioConta repositorioConta = new RepositorioConta(this);
+            conta = repositorioConta.buscarContaPorId(contaId);
+
+            if (conta == null) {
+                Log.e("DepositarActivity", "Conta não encontrada");
+                finish();
+            }
+        } else {
+            Log.e("DepositarActivity", "ID da conta inválido");
+            finish();
+        }
     }
 
     public void Confirmar(View view) {
-
-        EditText valor = findViewById(R.id.editText_depositar);
+        EditText ETvalor = findViewById(R.id.editText_depositar);
 
         try {
-            double valor_double = Double.parseDouble(valor.getText().toString());
+            double valor = Double.parseDouble(ETvalor.getText().toString());
 
-            conta.depositar(valor_double, repositorioExtrato, repositorioConta);
+            conta.depositar(valor);
 
             Intent intent = new Intent(this, HomeActivity.class);
-            intent.putExtra("conta", conta);
+            intent.putExtra("CONTA_ID", contaId);
             startActivity(intent);
             finish();
 
         } catch (Exception e) {
-            Log.i("Depositar", "Erro no parse");
+            Log.i("DepositarActivity", "Erro no parse do valor");
         }
     }
 }

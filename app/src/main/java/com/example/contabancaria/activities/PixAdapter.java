@@ -22,20 +22,16 @@ public class PixAdapter extends ArrayAdapter<Pix> {
     public View getView(int position, View convertView, ViewGroup parent) {
         Pix pix = getItem(position);
 
-        // Verifique se a view existente está sendo reutilizada, caso contrário, infle a nova view
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_pix, parent, false);
         }
 
-        // Encontre os TextViews para preencher com os dados da transação
         TextView tvTipoChave = convertView.findViewById(R.id.tvTipoChave);
         TextView tvChave = convertView.findViewById(R.id.tvChave);
 
-        // Popule os dados nas views
         tvTipoChave.setText(String.format("Tipo: " + pix.getTipoChave()));
         tvChave.setText(pix.getChave());
-
-        // Retorne a view preenchida para ser exibida no ListView
+        
         return convertView;
     }
 

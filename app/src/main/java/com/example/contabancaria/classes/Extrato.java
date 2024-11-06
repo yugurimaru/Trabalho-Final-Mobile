@@ -28,15 +28,8 @@ public class Extrato implements Serializable {
         return valor;
     }
 
-    public void setValor(double valor) {
-        this.valor = valor;
-    }
-
     public double getSaldoAtual() {
         return saldoAtual;
     }
 
-    public void setSaldoAtual(double saldoAtual) {
-        this.saldoAtual = saldoAtual;
-    }
 }

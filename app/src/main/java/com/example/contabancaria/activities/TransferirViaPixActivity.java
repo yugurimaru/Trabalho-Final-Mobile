@@ -18,7 +18,7 @@ import com.example.contabancaria.classes.Extrato;
 import com.example.contabancaria.classes.Pix;
 
 public class TransferirViaPixActivity extends AppCompatActivity {
-    private Conta conta;
+    private int contaId;
     private RepositorioConta repositorioConta;
     private RepositorioPix repositorioPix;
     private RepositorioExtrato repositorioExtrato;
@@ -28,80 +28,81 @@ public class TransferirViaPixActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_transferir_via_pix);
-        conta = (Conta) getIntent().getSerializableExtra("conta");
+        setTitle("Transferencia Pix");
+
+        contaId = getIntent().getIntExtra("CONTA_ID", -1);
+
+
+        if (contaId == -1) {
+            Log.e("TransferirViaPixActivity", "ID da conta invalido");
+            finish();
+            return;
+        }
 
         repositorioConta = new RepositorioConta(this);
         repositorioPix = new RepositorioPix(this);
         repositorioExtrato = new RepositorioExtrato(this);
-
     }
 
     public void Transferir(View view) {
+        EditText ETchavePixDestino = findViewById(R.id.editText_chavePixTransferencia);
+        EditText ETvalor = findViewById(R.id.editText_valorTransferencia);
 
-        EditText chavePix = findViewById(R.id.editText_chavePixTransferencia);
-        EditText valor = findViewById(R.id.editText_valorTransferencia);
+        String chavePixDestino = ETchavePixDestino.getText().toString().trim();
+        String valor = ETvalor.getText().toString().trim();
 
-        String chavePix_str = chavePix.getText().toString().trim();
-        String valor_str = valor.getText().toString().trim();
-
-        if (chavePix_str.isEmpty() || valor_str.isEmpty()) {
-            //Toast.makeText(this, "Chave Pix e Valor são obrigatórios", Toast.LENGTH_SHORT).show();
-            Log.e("TransferenciaPix", "Erro empty");
+        if (chavePixDestino.isEmpty() || valor.isEmpty()) {
+            Toast.makeText(this, "Chave Pix e Valor são obrigatórios", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        Pix chavePixObj = repositorioPix.buscarChavePix(chavePix_str);
+        Pix pixDestino = repositorioPix.buscarChavePix(chavePixDestino);
 
-        if (chavePixObj == null) {
-            //Toast.makeText(this, "Chave Pix não encontrada", Toast.LENGTH_SHORT).show();
-            Log.e("TransferenciaPix", "Chave Pix nao encontrada");
+        if (pixDestino == null) {
+            Toast.makeText(this, "Chave Pix não encontrada", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        Conta contaRecebedor = repositorioConta.buscarContaPorId(chavePixObj.getId_conta());
-
-        double valor_double;
+        double valorDouble;
         try {
-            valor_double = Double.parseDouble(valor_str);
+            valorDouble = Double.parseDouble(valor);
         } catch (NumberFormatException e) {
-            //Toast.makeText(this, "Valor inválido", Toast.LENGTH_SHORT).show();
-            Log.e("TransferenciaPix", "Valor invalido");
+            Toast.makeText(this, "Valor inválido", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        if (conta.getSaldo() < valor_double) {
-            //Toast.makeText(this, "Saldo insuficiente", Toast.LENGTH_SHORT).show();
-            Log.e("TransferenciaPix", "Saldo insuficiente");
+        Conta contaRemetente = repositorioConta.buscarContaPorId(contaId);
+        if (contaRemetente == null) {
+            Toast.makeText(this, "Conta remetente não encontrada", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        Conta contaRecebedora = repositorioConta.buscarContaPorId(chavePixObj.getId_conta());
+        Conta contaRecebedora = repositorioConta.buscarContaPorId(pixDestino.getId_conta());
         if (contaRecebedora == null) {
-            //Toast.makeText(this, "Conta do recebedor nao encontrada", Toast.LENGTH_SHORT).show();
-            Log.e("TransferenciaPix", "Conta recebedora nao encontrada");
+            Toast.makeText(this, "Conta destino não encontrada", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        // Atualiza os saldos
-        conta.setSaldo(conta.getSaldo() - valor_double);
-        contaRecebedora.setSaldo(contaRecebedora.getSaldo() + valor_double);
+        try {
+            contaRemetente.validarTransferenciaPix(contaRecebedora, valorDouble);
+        } catch (IllegalArgumentException e) {
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+            return;
+        }
 
-        // Atualiza os repositórios
-        repositorioConta.atualizarSaldo(conta.getId(), conta.getSaldo());
+        contaRemetente.setSaldo(contaRemetente.getSaldo() - valorDouble);
+        contaRecebedora.setSaldo(contaRecebedora.getSaldo() + valorDouble);
+
+        repositorioConta.atualizarSaldo(contaRemetente.getId(), contaRemetente.getSaldo());
         repositorioConta.atualizarSaldo(contaRecebedora.getId(), contaRecebedora.getSaldo());
 
-        Extrato extratoRemetente = new Extrato("Transferência Pix", -valor_double, conta.getSaldo());
-        Extrato extratoRecebedor = new Extrato("Recebimento Pix", valor_double, contaRecebedor.getSaldo()+ valor_double);
+        Extrato extratoRemetente = new Extrato("Transferência Pix", -valorDouble, contaRemetente.getSaldo());
+        Extrato extratoRecebedor = new Extrato("Recebimento Pix", valorDouble, contaRecebedora.getSaldo());
 
-        // Registra a transação no extrato
-        repositorioExtrato.adicionarExtrato(extratoRemetente, conta.getId()); // Transferência para o remetente
-        repositorioExtrato.adicionarExtrato(extratoRecebedor,chavePixObj.getId_conta()); // Transferência para o recebedor
+        repositorioExtrato.adicionarExtrato(extratoRemetente, contaRemetente.getId());
+        repositorioExtrato.adicionarExtrato(extratoRecebedor, contaRecebedora.getId());
 
-        Toast.makeText(this, "Transferência realizada com sucesso", Toast.LENGTH_SHORT).show();
-        finish(); // Finaliza a atividade
-
-
-
-
+        Toast.makeText(this, "Transferência realizada com sucesso", Toast.LENGTH_LONG).show();
+        finish();
     }
 }

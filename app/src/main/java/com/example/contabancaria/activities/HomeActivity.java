@@ -2,19 +2,19 @@ package com.example.contabancaria.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.contabancaria.DAO.RepositorioConta;
 import com.example.contabancaria.R;
 import com.example.contabancaria.classes.Conta;
 
-import java.io.Serializable;
-
 public class HomeActivity extends AppCompatActivity {
-    private Conta conta;
+    private int contaId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,39 +22,45 @@ public class HomeActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_home);
         setTitle("Home");
-        conta = (Conta) getIntent().getSerializableExtra("conta");
 
-        TextView boasvindas = findViewById(R.id.textView_home);
+        contaId = getIntent().getIntExtra("CONTA_ID", -1);
 
-        boasvindas.setText("Seja bem vindo " + conta.getUsuario());
+        if (contaId != -1) {
+            RepositorioConta repositorioConta = new RepositorioConta(this);
+            Conta conta = repositorioConta.buscarContaPorId(contaId);
 
+            if (conta != null) {
+                TextView welcoming = findViewById(R.id.textView_home);
+                welcoming.setText(String.format("Seja bem-vindo, %s", conta.getUsuario()));
+            } else {
+                Log.e("HomeActivity", "Conta não encontrada no banco de dados");
+            }
+        } else {
+            Log.e("HomeActivity", "ID da conta inválido");
+        }
     }
 
-
     public void depositar(View view) {
-        Intent intent = new Intent(this,DepositarActivity.class);
-        intent.putExtra("conta", (Serializable) conta);
+        Intent intent = new Intent(this, DepositarActivity.class);
+        intent.putExtra("CONTA_ID", contaId);
         startActivity(intent);
-
     }
 
     public void retirar(View view) {
-        Intent intent = new Intent(this,RetirarActivity.class);
-        intent.putExtra("conta", (Serializable) conta);
+        Intent intent = new Intent(this, RetirarActivity.class);
+        intent.putExtra("CONTA_ID", contaId);
         startActivity(intent);
-
     }
 
     public void extrato(View view) {
-        Intent intent = new Intent(this,ExtratoActivity.class);
-        intent.putExtra("conta", (Serializable) conta);
+        Intent intent = new Intent(this, ExtratoActivity.class);
+        intent.putExtra("CONTA_ID", contaId);
         startActivity(intent);
-
     }
 
     public void pix(View view) {
         Intent intent = new Intent(this, HomePixActivity.class);
-        intent.putExtra("conta", (Serializable) conta);
+        intent.putExtra("CONTA_ID", contaId);
         startActivity(intent);
     }
 

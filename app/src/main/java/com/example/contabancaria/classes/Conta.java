@@ -5,86 +5,111 @@ import com.example.contabancaria.DAO.RepositorioExtrato;
 import com.example.contabancaria.DAO.RepositorioPix;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
-public class Conta implements Serializable {
-
-    private static final long serialVersionUID = 1L;
+public class Conta {
     private int id;
-    private String usuario;
-    private String senha;
+    private final String usuario;
+    private final String senha;
     private double saldo;
 
+    private final RepositorioExtrato repositorioExtrato;
+    private final RepositorioConta repositorioConta;
+    private final RepositorioPix repositorioPix;
 
-    public Conta(int id, double saldoInicial, String usuario, String senha) {
+    //Criação de novas contas
+    public Conta(String usuario, String senha, double saldoInicial, RepositorioExtrato repositorioExtrato, RepositorioConta repositorioConta, RepositorioPix repositorioPix) {
+        validarSaldoInicial(saldoInicial);
+        this.usuario = usuario;
+        this.senha = senha;
+        this.saldo = saldoInicial;
+        this.repositorioExtrato = repositorioExtrato;
+        this.repositorioConta = repositorioConta;
+        this.repositorioPix = repositorioPix;
+    }
+    //Conta existentes com ID
+    public Conta(int id, String usuario, String senha, double saldo,
+                 RepositorioExtrato repositorioExtrato, RepositorioConta repositorioConta, RepositorioPix repositorioPix) {
         this.id = id;
         this.usuario = usuario;
         this.senha = senha;
+        this.saldo = saldo;
+        this.repositorioExtrato = repositorioExtrato;
+        this.repositorioConta = repositorioConta;
+        this.repositorioPix = repositorioPix;
+    }
+
+    private void validarSaldoInicial(double saldoInicial) {
         if (saldoInicial < 0) {
             throw new IllegalArgumentException("O saldo inicial não pode ser negativo");
         }
-        this.saldo = saldoInicial;
     }
 
-    public void depositar(double valor, RepositorioExtrato repositorioExtrato, RepositorioConta repositorioConta) {
-        if (valor <= 0) {
-            throw new IllegalArgumentException("O valor de depósito deve ser maior que zero");
-        }
+    public synchronized void depositar(double valor) {
+        validarValor(valor);
         saldo += valor;
-        adicionarExtrato(repositorioExtrato, repositorioConta, "Deposito", valor);
+        atualizarSaldoComExtrato("Depósito", valor);
     }
 
-    public void retirar(double valor, RepositorioExtrato repositorioExtrato, RepositorioConta repositorioConta) {
+    public synchronized void retirar(double valor) {
+        validarValor(valor);
+        validarSaldoSuficiente(valor);
+        saldo -= valor;
+        atualizarSaldoComExtrato("Retirada", valor);
+    }
+
+    private void validarValor(double valor) {
         if (valor <= 0) {
-            throw new IllegalArgumentException("O valor de retirada deve ser maior que zero");
+            throw new IllegalArgumentException("O valor deve ser maior que zero");
         }
+    }
+
+    private void validarSaldoSuficiente(double valor) {
         if (valor > saldo) {
             throw new IllegalArgumentException("Saldo insuficiente");
         }
-        saldo -= valor;
-
-        adicionarExtrato(repositorioExtrato, repositorioConta, "Retirada", valor);
     }
 
-    private void adicionarExtrato(RepositorioExtrato repositorioExtrato,RepositorioConta repositorioConta, String tipoTransacao, double valor) {
-
+    private void atualizarSaldoComExtrato(String tipoTransacao, double valor) {
         Extrato novaTransacao = new Extrato(tipoTransacao, valor, saldo);
-
-        repositorioConta.atualizarSaldo(this.id, saldo);
-        repositorioExtrato.adicionarExtrato(novaTransacao, this.id);
+        repositorioConta.atualizarSaldo(id, saldo);
+        repositorioExtrato.adicionarExtrato(novaTransacao, id);
     }
 
-    public void adicionarChavePix(RepositorioPix repositorioPix, Pix pix){
-        if (pix == null){
-            throw new IllegalArgumentException("A chave Pix não pode ser nula");
+    public void adicionarChavePix(Pix pix) {
+        if (pix == null) {
+            throw new IllegalArgumentException("A chave Pix nao pode ser nula");
         }
-        repositorioPix.adicionarChavesPix(pix, this.id);
+        repositorioPix.adicionarChavesPix(pix, id);
     }
 
+    public void validarTransferenciaPix(Conta contaDestino, double valor) {
+        if (contaDestino == null) {
+            throw new IllegalArgumentException("Conta destino não encontrada");
+        }
+
+        if (contaDestino.getId() == this.id) {
+            throw new IllegalArgumentException("Nao e possível transferir para a propria conta");
+        }
+
+        if (valor <= 0) {
+            throw new IllegalArgumentException("O valor da transferencia deve ser maior que zero");
+        }
+
+        if (this.saldo < valor) {
+            throw new IllegalArgumentException("Saldo insuficiente para realizar a transferencia");
+        }
+    }
 
     public int getId() {
         return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getUsuario() {
         return usuario;
     }
 
-    public void setUsuario(String usuario) {
-        this.usuario = usuario;
-    }
-
     public String getSenha() {
         return senha;
-    }
-
-    public void setSenha(String senha) {
-        this.senha = senha;
     }
 
     public double getSaldo() {
@@ -94,5 +119,4 @@ public class Conta implements Serializable {
     public void setSaldo(double saldo) {
         this.saldo = saldo;
     }
-
 }
