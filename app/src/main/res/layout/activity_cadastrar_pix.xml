@@ -25,14 +25,25 @@
             android:id="@+id/textView_TipoChavePix"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Digite o tipo da Chave Pix (CPF ou Telefone):" />
+            android:text="Escolha o tipo da Chave Pix:" />
 
-        <EditText
-            android:id="@+id/editText_TipoChavePix"
+        <RadioGroup
+            android:id="@+id/radioGroupTipoChave"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="text" />
+            android:layout_height="wrap_content">
+
+            <RadioButton
+                android:id="@+id/radioButton_cpf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="CPF" />
+
+            <RadioButton
+                android:id="@+id/radioButton_telefone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Telefone" />
+        </RadioGroup>
 
         <TextView
             android:id="@+id/textView_ChavePix"
@@ -41,11 +52,22 @@
             android:text="Digite a Chave Pix:" />
 
         <EditText
-            android:id="@+id/editText_ChavePix"
+            android:id="@+id/editText_chavePixCPF"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="text" />
+            android:inputType="text"
+            android:text="000.000.000-00"
+            android:visibility="invisible" />
+
+        <EditText
+            android:id="@+id/editText_chavePixTelefone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="text"
+            android:text="(00) 00000-0000"
+            android:visibility="invisible" />
 
         <Button
             android:id="@+id/button2"
@@ -53,5 +75,6 @@
             android:layout_height="wrap_content"
             android:onClick="Confirmar"
             android:text="Confirmar" />
+
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

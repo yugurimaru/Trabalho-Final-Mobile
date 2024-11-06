@@ -53,7 +53,7 @@ public class CadastroActivity extends AppCompatActivity {
         if (repositorioConta.buscarContaPorUsuarioSenha(usuario, senha) == null) {
             Conta conta = new Conta(usuario, senha, 0, repositorioExtrato, repositorioConta, repositorioPix);
             repositorioConta.adicionarConta(conta);
-            Toast.makeText(this, "Cadastro realizado com sucesso", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Cadastro realizado com sucesso", Toast.LENGTH_LONG).show();
 
             startActivity(new Intent(this, LoginActivity.class));
             finish();

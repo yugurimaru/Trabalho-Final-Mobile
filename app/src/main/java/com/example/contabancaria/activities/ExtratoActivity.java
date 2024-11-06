@@ -3,6 +3,7 @@ package com.example.contabancaria.activities;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -29,7 +30,8 @@ public class ExtratoActivity extends AppCompatActivity {
         List<Extrato> extratoList = repositorioExtrato.listarExtratos(contaId);
 
         if (extratoList.isEmpty()) {
-            Log.i("ExtratoActivity", "Nenhuma transação encontrada.");
+            //Log.i("ExtratoActivity", "Nenhuma transação encontrada.");
+            Toast.makeText(this, "Não há registro de extratos", Toast.LENGTH_LONG).show();
         } else {
             ExtratoAdapter adapter = new ExtratoAdapter(this, extratoList);
             listView.setAdapter(adapter);

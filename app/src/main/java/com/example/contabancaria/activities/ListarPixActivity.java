@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -43,7 +44,8 @@ public class ListarPixActivity extends AppCompatActivity {
         List<Pix> pixList = repositorioPix.listarChavesPix(contaId);
 
         if (pixList.isEmpty()) {
-            Log.i("PIX", "Nenhuma Chave Pix encontrada.");
+            //Log.i("PIX", "Nenhuma Chave Pix encontrada.");
+            Toast.makeText(this, "Não há registro de Chaves Pix", Toast.LENGTH_LONG).show();
         } else {
             PixAdapter adapter = new PixAdapter(this, pixList);
             listView.setAdapter(adapter);

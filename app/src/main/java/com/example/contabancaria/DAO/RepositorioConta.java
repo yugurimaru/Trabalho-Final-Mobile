@@ -68,23 +68,21 @@ public class RepositorioConta extends SQLiteOpenHelper {
 
     public Conta buscarContaPorUsuarioSenha(String usuario, String senha) {
         SQLiteDatabase db = this.getReadableDatabase();
-        Conta conta = null;
-        Cursor cursor = null;
-        try {
-            String query = "SELECT * FROM conta WHERE usuario = ? AND senha = ?";
-            cursor = db.rawQuery(query, new String[]{usuario, senha});
-
+        try (Cursor cursor = db.rawQuery("SELECT * FROM conta WHERE usuario = ? AND senha = ?",
+                new String[]{usuario, senha})) {
             if (cursor.moveToFirst()) {
                 int id = cursor.getInt(cursor.getColumnIndexOrThrow("id"));
                 double saldo = cursor.getDouble(cursor.getColumnIndexOrThrow("saldo"));
-                conta = new Conta(id, usuario, senha, saldo, repositorioExtrato, this, repositorioPix);
+                return new Conta(id, usuario, senha, saldo, repositorioExtrato, this, repositorioPix);
             }
+        } catch (Exception e) {
+            Log.e("RepositorioConta", "Erro ao buscar conta: ", e);
         } finally {
-            if (cursor != null) cursor.close();
             db.close();
         }
-        return conta;
+        return null;
     }
+
 
     public Conta buscarContaPorId(int id) {
         SQLiteDatabase db = this.getReadableDatabase();

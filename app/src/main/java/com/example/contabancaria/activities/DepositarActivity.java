@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,10 +31,6 @@ public class DepositarActivity extends AppCompatActivity {
             RepositorioConta repositorioConta = new RepositorioConta(this);
             conta = repositorioConta.buscarContaPorId(contaId);
 
-            if (conta == null) {
-                Log.e("DepositarActivity", "Conta não encontrada");
-                finish();
-            }
         } else {
             Log.e("DepositarActivity", "ID da conta inválido");
             finish();
@@ -47,6 +44,8 @@ public class DepositarActivity extends AppCompatActivity {
             double valor = Double.parseDouble(ETvalor.getText().toString());
 
             conta.depositar(valor);
+
+            Toast.makeText(this, "Deposito realizado com sucesso", Toast.LENGTH_LONG).show();
 
             Intent intent = new Intent(this, HomeActivity.class);
             intent.putExtra("CONTA_ID", contaId);

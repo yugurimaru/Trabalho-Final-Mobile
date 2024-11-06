@@ -1,5 +1,7 @@
 package com.example.contabancaria.classes;
 
+import android.widget.Toast;
+
 import com.example.contabancaria.DAO.RepositorioConta;
 import com.example.contabancaria.DAO.RepositorioExtrato;
 import com.example.contabancaria.DAO.RepositorioPix;
@@ -54,7 +56,7 @@ public class Conta {
         validarValor(valor);
         validarSaldoSuficiente(valor);
         saldo -= valor;
-        atualizarSaldoComExtrato("Retirada", valor);
+        atualizarSaldoComExtrato("Retirada", -valor);
     }
 
     private void validarValor(double valor) {

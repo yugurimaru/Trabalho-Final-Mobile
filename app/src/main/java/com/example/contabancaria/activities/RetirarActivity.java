@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -49,6 +50,8 @@ public class RetirarActivity extends AppCompatActivity {
 
             conta.retirar(valor);
 
+            Toast.makeText(this, "Retirada realizad com sucesso", Toast.LENGTH_LONG).show();
+
             Intent intent = new Intent(this, HomeActivity.class);
             intent.putExtra("CONTA_ID", contaId);
             startActivity(intent);
@@ -56,6 +59,7 @@ public class RetirarActivity extends AppCompatActivity {
 
         } catch (Exception e) {
             Log.i("RetirarActivity", "Erro no parse");
+            Toast.makeText(this, "Valor inválido", Toast.LENGTH_SHORT).show();
         }
     }
 }
