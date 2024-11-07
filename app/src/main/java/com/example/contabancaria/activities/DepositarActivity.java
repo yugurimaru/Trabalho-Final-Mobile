@@ -32,7 +32,7 @@ public class DepositarActivity extends AppCompatActivity {
             conta = repositorioConta.buscarContaPorId(contaId);
 
         } else {
-            Log.e("DepositarActivity", "ID da conta inválido");
+            Log.e("DepositarActivity", "ID da conta invalido");
             finish();
         }
     }
@@ -53,7 +53,8 @@ public class DepositarActivity extends AppCompatActivity {
             finish();
 
         } catch (Exception e) {
-            Log.i("DepositarActivity", "Erro no parse do valor");
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
+            //Log.i("DepositarActivity", "Erro no parse do valor");
         }
     }
 }

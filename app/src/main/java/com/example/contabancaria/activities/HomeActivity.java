@@ -36,7 +36,7 @@ public class HomeActivity extends AppCompatActivity {
                 Log.e("HomeActivity", "Conta não encontrada no banco de dados");
             }
         } else {
-            Log.e("HomeActivity", "ID da conta inválido");
+            Log.e("HomeActivity", "ID da conta invalido");
         }
     }
 

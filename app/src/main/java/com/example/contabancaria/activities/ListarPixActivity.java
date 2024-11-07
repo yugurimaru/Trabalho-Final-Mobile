@@ -33,7 +33,7 @@ public class ListarPixActivity extends AppCompatActivity {
         contaId = getIntent().getIntExtra("CONTA_ID", -1);
 
         if (contaId == -1) {
-            Log.e("ListarPixActivity", "ID da conta inválido");
+            Log.e("ListarPixActivity", "ID da conta invalido");
             finish();
             return;
         }

@@ -24,7 +24,7 @@
             android:id="@+id/textView_chavePixTransferencia"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Chave Pix que o valor será transferido" />
+            android:text="Chave Pix do destinatário:" />
 
         <EditText
             android:id="@+id/editText_chavePixTransferencia"
@@ -37,7 +37,7 @@
             android:id="@+id/textView_valorTransferencia"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Valor" />
+            android:text="Valor:" />
 
         <EditText
             android:id="@+id/editText_valorTransferencia"

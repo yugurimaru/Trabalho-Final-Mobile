@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -42,7 +43,7 @@ public class CadastrarPixActivity extends AppCompatActivity {
             RepositorioConta repositorioConta = new RepositorioConta(this);
             conta = repositorioConta.buscarContaPorId(contaId);
         } else {
-            Log.e("CadastrarPixActivity", "ID da conta inválido");
+            Log.e("CadastrarPixActivity", "ID da conta invalido");
             finish();
             return;
         }
@@ -138,10 +139,18 @@ public class CadastrarPixActivity extends AppCompatActivity {
 
         if (rbTelefone.isChecked()) {
             TipoChavePix = "Telefone";
-            ChavePix = editTextChavePixTelefone.getText().toString();
+            ChavePix = editTextChavePixTelefone.getText().toString().trim().replaceAll("[()-]", "");
         } else if (rbCpf.isChecked()) {
             TipoChavePix = "CPF";
-            ChavePix = editTextChavePixCPF.getText().toString();
+            ChavePix = editTextChavePixCPF.getText().toString().replaceAll("[.-]", "");;
+        }
+
+        if(ChavePix.length() != 12 && !rbCpf.isChecked()){
+            Toast.makeText(this, "CPF inválido", Toast.LENGTH_SHORT).show();
+            finish();
+        }else if(ChavePix.length() != 11 && !rbTelefone.isChecked()){
+            Toast.makeText(this, "Telefone inválido", Toast.LENGTH_SHORT).show();
+            finish();
         }
 
         Pix pix = new Pix(conta.getId(), ChavePix, TipoChavePix);

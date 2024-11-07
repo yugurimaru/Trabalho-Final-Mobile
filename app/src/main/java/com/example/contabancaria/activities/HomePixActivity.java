@@ -34,7 +34,7 @@ public class HomePixActivity extends AppCompatActivity {
             Conta conta = repositorioConta.buscarContaPorId(contaId);
 
         } else {
-            Log.e("HomeActivity", "ID da conta inválido");
+            Log.e("HomeActivity", "ID da conta invalido");
         }
     }
 

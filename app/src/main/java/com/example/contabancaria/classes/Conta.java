@@ -61,7 +61,10 @@ public class Conta {
 
     private void validarValor(double valor) {
         if (valor <= 0) {
-            throw new IllegalArgumentException("O valor deve ser maior que zero");
+            throw new IllegalArgumentException("Valor deve ser maior que zero");
+        }
+        if (valor > Double.MAX_VALUE) {
+            throw new IllegalArgumentException("Valor inválido");
         }
     }
 

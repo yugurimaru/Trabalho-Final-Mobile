@@ -37,7 +37,7 @@ public class RetirarActivity extends AppCompatActivity {
                 finish();
             }
         } else {
-            Log.e("DepositarActivity", "ID da conta inválido");
+            Log.e("DepositarActivity", "ID da conta invalido");
             finish();
         }
     }
@@ -50,7 +50,7 @@ public class RetirarActivity extends AppCompatActivity {
 
             conta.retirar(valor);
 
-            Toast.makeText(this, "Retirada realizad com sucesso", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Retirada realizada com sucesso", Toast.LENGTH_LONG).show();
 
             Intent intent = new Intent(this, HomeActivity.class);
             intent.putExtra("CONTA_ID", contaId);
@@ -58,7 +58,7 @@ public class RetirarActivity extends AppCompatActivity {
             finish();
 
         } catch (Exception e) {
-            Log.i("RetirarActivity", "Erro no parse");
+            //Log.i("RetirarActivity", "Erro no parse");
             Toast.makeText(this, "Valor inválido", Toast.LENGTH_SHORT).show();
         }
     }
