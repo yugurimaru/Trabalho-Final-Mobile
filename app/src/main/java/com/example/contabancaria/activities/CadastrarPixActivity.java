@@ -153,8 +153,15 @@ public class CadastrarPixActivity extends AppCompatActivity {
             finish();
         }
 
-        Pix pix = new Pix(conta.getId(), ChavePix, TipoChavePix);
-        conta.adicionarChavePix(pix);
+        try {
+            Pix pix = new Pix(conta.getId(), ChavePix, TipoChavePix);
+            conta.adicionarChavePix(pix);
+            Toast.makeText(this, "Chave Pix adicionada com sucesso!", Toast.LENGTH_SHORT).show();
+        }catch(Exception e){
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
+        }
+
+
 
         Intent intent = new Intent(this, HomePixActivity.class);
         intent.putExtra("CONTA_ID", contaId);

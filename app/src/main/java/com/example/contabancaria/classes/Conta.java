@@ -63,8 +63,8 @@ public class Conta {
         if (valor <= 0) {
             throw new IllegalArgumentException("Valor deve ser maior que zero");
         }
-        if (valor > Double.MAX_VALUE) {
-            throw new IllegalArgumentException("Valor inválido");
+        if (valor > 1000000) {
+            throw new IllegalArgumentException("valores acima de 1.000.000 (Um milhão) são inválidos");
         }
     }
 
@@ -84,7 +84,11 @@ public class Conta {
         if (pix == null) {
             throw new IllegalArgumentException("A chave Pix nao pode ser nula");
         }
+        if(repositorioPix.chavePixJaExiste(pix.getChave())){
+            throw new IllegalArgumentException("Chave Pix ja está cadastrada");
+        }
         repositorioPix.adicionarChavesPix(pix, id);
+
     }
 
     public void validarTransferenciaPix(Conta contaDestino, double valor) {

@@ -40,11 +40,12 @@
             android:text="Valor:" />
 
         <EditText
-            android:id="@+id/editText_valorTransferencia"
+            android:id="@+id/editTextNumber_valorTransferencia"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="text" />
+            android:inputType="number"
+            android:text="0.0" />
 
         <Button
             android:id="@+id/button4"

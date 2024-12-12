@@ -46,7 +46,7 @@ public class TransferirViaPixActivity extends AppCompatActivity {
 
     public void Transferir(View view) {
         EditText ETchavePixDestino = findViewById(R.id.editText_chavePixTransferencia);
-        EditText ETvalor = findViewById(R.id.editText_valorTransferencia);
+        EditText ETvalor = findViewById(R.id.editTextNumber_valorTransferencia);
 
         String chavePixDestino = ETchavePixDestino.getText().toString().trim();
         String valor = ETvalor.getText().toString().trim();

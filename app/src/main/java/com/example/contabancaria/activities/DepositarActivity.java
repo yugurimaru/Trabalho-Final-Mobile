@@ -38,7 +38,7 @@ public class DepositarActivity extends AppCompatActivity {
     }
 
     public void Confirmar(View view) {
-        EditText ETvalor = findViewById(R.id.editText_depositar);
+        EditText ETvalor = findViewById(R.id.editTextNumber_depositar);
 
         try {
             double valor = Double.parseDouble(ETvalor.getText().toString());

@@ -72,6 +72,31 @@ public class RepositorioPix extends SQLiteOpenHelper {
         return pix;
     }
 
+    public boolean chavePixJaExiste(String chavePix) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = null;
+        boolean existeChave = false;
+
+        String query = "SELECT 1 FROM pix WHERE chave = ?";
+        try {
+            cursor = db.rawQuery(query, new String[]{chavePix});
+
+            // Verifica se o cursor retornou algum resultado
+            if (cursor != null && cursor.moveToFirst()) {
+                existeChave = true;
+            }
+        } catch (Exception e) {
+            Log.e("RepositorioPix", "Erro ao buscar chave Pix: " + e.getMessage());
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+            db.close();
+        }
+
+        return existeChave;
+    }
+
 
     public List<Pix> listarChavesPix(int contaId) {
         List<Pix> pixList = new ArrayList<>();

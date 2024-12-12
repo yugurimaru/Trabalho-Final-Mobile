@@ -43,7 +43,7 @@ public class RetirarActivity extends AppCompatActivity {
     }
 
     public void Confirmar(View view) {
-        EditText ETvalor = findViewById(R.id.editText_retirar);
+        EditText ETvalor = findViewById(R.id.editTextNumber_retirar);
 
         try {
             double valor = Double.parseDouble(ETvalor.getText().toString());
@@ -59,7 +59,8 @@ public class RetirarActivity extends AppCompatActivity {
 
         } catch (Exception e) {
             //Log.i("RetirarActivity", "Erro no parse");
-            Toast.makeText(this, "Valor inválido", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
+            //Toast.makeText(this, "Valor inválido", Toast.LENGTH_SHORT).show();
         }
     }
 }

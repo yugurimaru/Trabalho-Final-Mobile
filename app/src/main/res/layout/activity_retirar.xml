@@ -32,12 +32,12 @@
             android:text="Digite o valor a retirar:" />
 
         <EditText
-            android:id="@+id/editText_retirar"
+            android:id="@+id/editTextNumber_retirar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="text"
-            android:text="0.00" />
+            android:inputType="number"
+            android:text="0.0" />
 
         <Button
             android:id="@+id/button_confirmar"
